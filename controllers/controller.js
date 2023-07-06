@@ -27,4 +27,28 @@ router.post("/", (req, res) => {
   res.json(transactionsArray[transactionsArray.length - 1]);
 });
 
+// Deleting a transaction by ID
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  let foundIndex = transactionsArray.findIndex(
+    (item) => item.id === Number(id)
+  );
+
+  if (foundIndex === -1) {
+    res.status(404).json({
+      status: false,
+      message: "Sorry, the ID you entered does exist in our database",
+    });
+  } else {
+    let itemToDelete = transactionsArray[foundIndex];
+    transactionsArray.splice(foundIndex, 1);
+    res.status(200).json({
+      status: true,
+      message: "Transaction successfully deleted",
+      data: itemToDelete,
+    });
+  }
+});
+
 module.exports = router;
