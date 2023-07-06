@@ -24,8 +24,57 @@ router.get("/:id", (req, res) => {
 // Adding a new transaction
 router.post("/", (req, res) => {
   transactionsArray.push(req.body);
-  res.json(transactionsArray[transactionsArray.length - 1]);
+  res.status(200).json({
+    status: true,
+    message: "New transaction added!",
+    data: transactionsArray[transactionsArray.length - 1],
+  });
 });
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params; // Access id from req.params
+
+  const foundIndex = transactionsArray.findIndex(
+    (item) => item.id === Number(id)
+  );
+
+  if (foundIndex === -1) {
+    res.status(404).json({
+      status: false,
+      message: "Sorry, the ID you entered does not exist in our database", // Corrected error message
+    });
+  } else {
+    let foundItem = transactionsArray[foundIndex];
+    transactionsArray[foundIndex] = req.body; // Update the item in transactionsArray
+    res.status(200).json({
+      status: true,
+      message: "Successfully updated",
+      data: foundItem,
+    });
+  }
+});
+// // Update an existing transaction
+// router.put("/:id", (req, res) => {
+//   const { id } = req.body;
+//   const foundIndex = transactionsArray.findIndex(
+//     (item) => item.id === Number(id)
+//   );
+
+//   if (foundIndex === -1) {
+//     res.status(404).json({
+//       status: false,
+//       message: "Sorry, the ID you entered does exist in our database",
+//     });
+//   } else {
+//     let foundItem = transactionsArray[foundIndex];
+//     transactionsArray.splice(foundIndex, 1, req.body);
+//     res.status(200).json({
+//       status: true,
+//       message: "Successfully updated",
+//       data: foundItem,
+//     });
+//   }
+// });
 
 // Deleting a transaction by ID
 router.delete("/:id", (req, res) => {
