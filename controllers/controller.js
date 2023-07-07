@@ -3,12 +3,12 @@ const router = express.Router();
 
 let transactionsArray = require("../models/transactions");
 
-// Gets all transactions
+// Reads all transactions
 router.get("/", (req, res) => {
   res.json(transactionsArray);
 });
 
-// Get / Reads transaction by ID
+//  Reads single transaction by ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
@@ -31,8 +31,9 @@ router.post("/", (req, res) => {
   });
 });
 
+// Updating a current transaction
 router.put("/:id", (req, res) => {
-  const { id } = req.params; // Access id from req.params
+  const { id } = req.params;
 
   const foundIndex = transactionsArray.findIndex(
     (item) => item.id === Number(id)
@@ -41,11 +42,11 @@ router.put("/:id", (req, res) => {
   if (foundIndex === -1) {
     res.status(404).json({
       status: false,
-      message: "Sorry, the ID you entered does not exist in our database", // Corrected error message
+      message: "Sorry, the ID you entered does not exist in our database",
     });
   } else {
+    transactionsArray[foundIndex] = req.body;
     let foundItem = transactionsArray[foundIndex];
-    transactionsArray[foundIndex] = req.body; // Update the item in transactionsArray
     res.status(200).json({
       status: true,
       message: "Successfully updated",
@@ -53,28 +54,6 @@ router.put("/:id", (req, res) => {
     });
   }
 });
-// // Update an existing transaction
-// router.put("/:id", (req, res) => {
-//   const { id } = req.body;
-//   const foundIndex = transactionsArray.findIndex(
-//     (item) => item.id === Number(id)
-//   );
-
-//   if (foundIndex === -1) {
-//     res.status(404).json({
-//       status: false,
-//       message: "Sorry, the ID you entered does exist in our database",
-//     });
-//   } else {
-//     let foundItem = transactionsArray[foundIndex];
-//     transactionsArray.splice(foundIndex, 1, req.body);
-//     res.status(200).json({
-//       status: true,
-//       message: "Successfully updated",
-//       data: foundItem,
-//     });
-//   }
-// });
 
 // Deleting a transaction by ID
 router.delete("/:id", (req, res) => {
