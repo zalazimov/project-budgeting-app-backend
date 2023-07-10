@@ -13,10 +13,12 @@ app.use(express.json());
 app.use("/transactions", controller);
 
 app.get("/", (req, res) => {
+  console.log("GET landing page");
   res.send("BudgetExpert");
 });
 
 app.get("*", (req, res) => {
+  console.log("Cannot fulfill GET request");
   res.status(404).send("Sorry, this route does not exist! Please try again.");
 });
 

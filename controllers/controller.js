@@ -5,14 +5,16 @@ let transactionsArray = require("../models/transactions");
 
 // Reads all transactions
 router.get("/", (req, res) => {
+  console.log("GET all transactions");
   res.json(transactionsArray);
 });
 
 //  Reads single transaction by ID
 router.get("/:id", (req, res) => {
+  console.log("GET single transaction by id");
   const { id } = req.params;
 
-  const match = transactionsArray.find((item) => item.id === Number(id));
+  const match = transactionsArray.find((item) => item.id === id);
 
   if (!match) {
     res.redirect("/*");
