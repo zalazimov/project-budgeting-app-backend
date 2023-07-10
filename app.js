@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/transactions", controller);
 
 app.get("/", (req, res) => {
-  console.log("GET landing page");
+  // console.log("GET landing page");
   res.send("BudgetExpert");
 });
 

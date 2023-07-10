@@ -5,13 +5,13 @@ let transactionsArray = require("../models/transactions");
 
 // Reads all transactions
 router.get("/", (req, res) => {
-  console.log("GET all transactions");
+  // console.log("GET all transactions");
   res.json(transactionsArray);
 });
 
 //  Reads single transaction by ID
 router.get("/:id", (req, res) => {
-  console.log("GET single transaction by id");
+  // console.log("GET single transaction by id");
   const { id } = req.params;
 
   const match = transactionsArray.find((item) => item.id === id);
@@ -36,10 +36,10 @@ router.post("/", (req, res) => {
 // Updating a current transaction
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  // console.log(id);
 
-  const foundIndex = transactionsArray.findIndex(
-    (item) => item.id === Number(id)
-  );
+  const foundIndex = transactionsArray.findIndex((item) => item.id === id);
+  // console.log(foundIndex);
 
   if (foundIndex === -1) {
     res.status(404).json({
