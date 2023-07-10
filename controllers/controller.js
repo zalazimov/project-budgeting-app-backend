@@ -61,9 +61,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  let foundIndex = transactionsArray.findIndex(
-    (item) => item.id === Number(id)
-  );
+  let foundIndex = transactionsArray.findIndex((item) => item.id === id);
 
   if (foundIndex === -1) {
     res.status(404).json({
